@@ -44,11 +44,15 @@ export function toGraph(input, type) {
         addNodeIfNotExist(type);
         for (let key in input) {
             addNodeIfNotExist(key);
-            console.log(input[key]['ingredients']);
+            if( input[key]['ingredients'].length > 0) {
             input[key]['ingredients'].forEach(ingredient => {
                 addNodeIfNotExist(ingredient.name);
                 addEdge(key, ingredient.name);
             });
+            } else {
+                addNodeIfNotExist('Resource');
+                addEdge(key, 'Resource');
+            }
         }
     }
 
