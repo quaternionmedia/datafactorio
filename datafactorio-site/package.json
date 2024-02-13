@@ -1,0 +1,31 @@
+{
+    "name": "datafactorio-site",
+    "version": "0.0.1",
+    "description": "Front end for qm-datafactorio",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "browserslist": [
+        "defaults"
+    ],"author": "pk",
+    "license": "MIT",
+    "dependencies": {
+        "meiosis": "^2.0.0",
+        "meiosis-setup": "^6.2.3",
+        "meiosis-tracer": "^6.0.1",
+        "mithril": "^2.2.2",
+        "cytoscape": "^3.28.1",
+        "cytoscape-cola": "^2.5.1",
+        "cytoscape-cose-bilkent": "^4.1.0",
+        "cytoscape-dagre": "^2.5.0",
+        "cytoscape-klay": "^3.1.4",
+        "cytoscape-avsdf": "^1.0.0",
+        "cytoscape-euler": "^1.2.2",
+        "cytoscape-spread": "^3.0.0"
+
+    },
+    "devDependencies": {
+        "vite": "^5.0.12"
+    }
+}
