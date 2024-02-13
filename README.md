@@ -18,3 +18,5 @@ Button above inventory (press `e` in game) that mirrors menu button
 ## output
 Files output to the `script-output` folder of factorio. Three datafiles are output with a seemingly random number followed by the type of data. These are json files of graphs (nodes and edges).
 
+## site
+To run the front end navigate to the datafactorio-site directory and run `npm install` and then `npm dev`
