@@ -4,13 +4,11 @@ import { meiosisSetup } from 'meiosis-setup';
 
 import { State } from './state';
 import { toGraph } from './toGraph';
-
+import { styleGraph } from './style';
+import { layoutTypes } from './state';
 
 // Configuration for layout options
-const layoutOptions = [
-  'random', 'grid', 'circle', 'breadthfirst', 'concentric',
-  'cose', 'cola', 'klay', 'dagre', 'euler', 'avsdf', 'cose-bilkent', 'spread'
-];
+// TODO: Use allowed values from State
 
 // Configuration for import data types
 const importDataTypes = ['recipe', 'entity', 'inventory'];
@@ -53,7 +51,7 @@ export const App = {
       ]),
       m('div#menu', m('div', [
         'Sort:', 
-        createSelect('layoutSelect', layoutOptions, handleLayoutChange),
+        createSelect('layoutSelect', layoutTypes, handleLayoutChange),
         m('button', { onclick: () => renderGraph(cell.state.graphData) }, 'Reset view'),
       ])),
       m('div#cy', { style: { width: '100%', height: '1000px' } }),
@@ -125,37 +123,6 @@ cytoscape.use(spread);
 
 
 let cyInstance = null; // Holds the Cytoscape instance globally
-
-function styleGraph(cy) {
-  cy.style()
-  .selector('core')
-    .style({
-      'active-bg-color': '#fff',
-    })
-    .selector('node')
-    .style({
-      'background-color': '#787',
-      'label': 'data(id)',
-      'font-size': '10px',
-      'min-zoomed-font-size': '8px',
-      'opacity': '0.7',
-      'width': 42,
-      'height': 42,
-    })
-    .selector('edge')
-      .style({
-        'width': 1,
-        'line-color': '#777',
-        'opacity': '0.7',
-      })
-    .selector(':selected')
-      .style({
-        'background-color': 'black',
-        'line-color': 'black',
-        'opacity': '1',
-      })
-    .update();
-}
 
 // Adapted renderGraph function to be used within Meiosis pattern context
 function renderGraph(graphData) {
