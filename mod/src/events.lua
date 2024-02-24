@@ -40,18 +40,16 @@ script.on_event("qmdf_export_data", function(event)
 end)
 
 script.on_event(defines.events.on_gui_click, function(event)
-    if event.element.name == "qmdf_export_data" then
-        local player = game.get_player(event.player_index)
+    local player = game.get_player(event.player_index)
+    local element = event.element
+
+    if element.name == "qmdf_export_data" then
         Export.export_all_data()
-    elseif event.element.name == "qmdf_close_window" then
-        local player = game.get_player(event.player_index)
+    elseif element.name == "qmdf_close_window" then
         GUI.toggle_interface(player)
     end
 end)
 
-script.on_event(defines.events.on_gui_opened, function(event)
-    GUI.add_export_button(event)
-end)
 
 script.on_event(defines.events.on_gui_closed, function(event)
     if event.element and event.element.name == "qmdf_main_frame" then

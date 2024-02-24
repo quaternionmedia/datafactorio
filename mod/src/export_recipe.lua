@@ -9,7 +9,6 @@ function Recipe.get_recipe_data()
             ingredients = recipe.ingredients,
             products = recipe.products,
             energy = recipe.energy,
-            nodetype = "recipe"
         }
     end
     return recipe_data

@@ -13,7 +13,6 @@ function Technology.get_technology_data()
             research_unit_energy = technology.research_unit_energy,
             effects = technology.effects,
             prerequisites = technology.prerequisites,
-            nodetype = "technology"
         }
     end
     return tech_data

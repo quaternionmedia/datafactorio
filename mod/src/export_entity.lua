@@ -8,7 +8,9 @@ function Entity.get_entity_data()
     for _, entity in pairs(entities) do
         entity_data[entity.name] = {
             position = {x = entity.position.x, y = entity.position.y},
-            nodetype = "entity"
+            direction = entity.direction,
+            type = entity.type,
+            force = entity.force.name,
         }
     end
     return entity_data

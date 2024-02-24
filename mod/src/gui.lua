@@ -1,25 +1,10 @@
 local GUI = {}
 local Export = require("export")
 
--- Function to add an export button to the GUI
 function GUI.add_export_button(event)
     local player = game.get_player(event.player_index)
-    if not player then return end  -- Safety check
-
-    local anchor = {gui=defines.relative_gui_type.controller_gui, position=defines.relative_gui_position.top}
-    
-    -- Check if the frame already exists to avoid duplicates
-    if player.gui.relative["export_frame"] then
-        player.gui.relative["export_frame"].destroy()
-    end
-
-    local frame = player.gui.relative.add{type="frame", name="export_frame", anchor=anchor}
-    frame.add{type="label", caption=player.name}
-
-    -- Add an export button
-    frame.add{type="button", name="qmdf_export_data", caption="Export"}
+    GUI.create_open_window_button(player)
 end
-
 
 function GUI.build_interface(player)
     player_global = global.players[player.index]
@@ -35,6 +20,14 @@ function GUI.build_interface(player)
 
     player_global.controls_active = true
     player_global.elements = {main_frame = main_frame, controls_flow = controls_flow}
+
+    -- Add checkboxes for each data type
+    local checkbox_flow = main_frame.add{type="flow", name="qmdf_checkbox_flow", direction="vertical"}
+    checkbox_flow.add{type="checkbox", name="qmdf_inventory_checkbox", caption="Export Inventory", state=true}
+    checkbox_flow.add{type="checkbox", name="qmdf_recipes_checkbox", caption="Export Recipes", state=false}
+    checkbox_flow.add{type="checkbox", name="qmdf_entities_checkbox", caption="Export Entities", state=true}
+    checkbox_flow.add{type="checkbox", name="qmdf_technologies_checkbox", caption="Export Technologies", state=false}
+
 end
 
 
@@ -60,9 +53,9 @@ function GUI.create_open_window_button(player)
         end
 
         -- Check if our button already exists to avoid duplicates
-        if not flow["open_qmdf_export_data"] then
-            flow.add{type="button", name="open_qmdf_export_data", caption="Open Data Export"}
-        end
+        -- if not flow["open_qmdf_export_data"] then
+        --     flow.add{type="button", name="open_qmdf_export_data", caption="Open Data Export"}
+        -- end
     end
 end
 
@@ -75,8 +68,17 @@ function GUI.close_window(player, window_name)
     end
 end
 
-function GUI.handle_export_button_click(button_name, player)
-    Export.export_all_data()
+function GUI.handle_export_button_click(player)
+    local screen_element = player.gui.screen.qmdf_main_frame
+    if screen_element then
+        local includeInventory = screen_element.qmdf_checkbox_flow.qmdf_inventory_checkbox.state
+        local includeRecipes = screen_element.qmdf_checkbox_flow.qmdf_recipes_checkbox.state
+        local includeEntities = screen_element.qmdf_checkbox_flow.qmdf_entities_checkbox.state
+        local includeTechnologies = screen_element.qmdf_checkbox_flow.qmdf_technologies_checkbox.state
+        
+        Export.export_selected_data(includeInventory, includeRecipes, includeEntities, includeTechnologies)
+    end
 end
+
 
 return GUI
