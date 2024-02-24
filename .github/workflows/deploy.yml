@@ -24,11 +24,8 @@ jobs:
           cd datafactorio-site
           npm ci
           npm run build
-          pwd
-          ls -al ..
-          ls -al app
 
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
+          folder: datafactorio-site/app/dist
