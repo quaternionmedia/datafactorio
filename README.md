@@ -1,22 +1,25 @@
 # datafactorio
-Factorio mod for exporting data
+Factorio mod to export data
 
-## setup
-In `runme.ipynb`, run `package_app` function, passing in the appropriate mod folder.
+## Setup
+To set up the `datafactorio` mod, follow these steps:
 
-This will zip the contents of the mod/src directory and place it in the mod folder.
+1. In `runme/setup.ipynb`, run the `package_app` function (set the path to the appropriate mod folder).
+1. This process will zip the contents of the `mod/src` directory and place the zipped file in the mod folder.
+1. Verify the installation by checking the mod section in the Factorio game menu.
 
-Check the mod section in factorio menu to verify.
+## Usage:
 
+- `ctrl+shift+U` to open the export menu. Checkboxes toggle export types
+- `ctrl+shift+J` to export the selected data. Export mirror checkboxes
 
-## usage
-`ctrl+shift+U` to open the menu
-`ctrl+shift+J` to export data
+## Output
+Exported files are output to the `script-output` folder within your Factorio directory. The filenames are generated with a seemingly random number followed by the type of data they contain, e.g., `123456-inventory.json` for inventory data. These files are in JSON format, detailing the selected data graphs (nodes and edges) based on the user's choices in the export menu.
 
-Button above inventory (press `e` in game) that mirrors menu button
+## Site
+To run the frontend for `datafactorio`, navigate to the `datafactorio-site` directory and execute the following commands:
 
-## output
-Files output to the `script-output` folder of factorio. Three datafiles are output with a seemingly random number followed by the type of data. These are json files of graphs (nodes and edges).
-
-## site
-To run the front end navigate to the datafactorio-site directory and run `npm install` and then `npm dev`
+1. `npm install` to install the necessary dependencies.
+1. `npm run dev` to start the development server.
+1. `localhost:1234` (or similar) will serve the site
+1. Select the file from the local factorio `script-output`
