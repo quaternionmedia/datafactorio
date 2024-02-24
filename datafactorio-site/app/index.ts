@@ -1,141 +1,121 @@
-import m from 'mithril';
-import meiosisTracer from 'meiosis-tracer';
-import { meiosisSetup } from 'meiosis-setup';
+import m from "mithril";
+import meiosisTracer from "meiosis-tracer";
+import { meiosisSetup } from "meiosis-setup";
+import { MeiosisCell, MeiosisComponent } from "meiosis-setup/types";
 
-import { State } from './state';
-import { toGraph } from './toGraph';
-import { styleGraph } from './style';
-import { layoutTypes } from './state';
+import { State } from "./state";
+import { layoutTypes, importTypes } from "./state";
+import { CyContainer, renderGraph } from "./cyto";
+import { FileInput } from "./ingest";
 
-// Configuration for layout options
-// TODO: Use allowed values from State
-
-// Configuration for import data types
-const importDataTypes = ['recipe', 'entity', 'inventory'];
-
-// Helper function to create a select dropdown
-function createSelect(id, options, onChange) {
-  return m('select', { id, onchange: onChange },
-    options.map(option => m('option', { value: option }, option.charAt(0).toUpperCase() + option.slice(1)))
+export const SelectOptions = (options, attrs) =>
+  m(
+    "select",
+    { ...attrs },
+    options.map((option) =>
+      m(
+        "option",
+        { value: option },
+        option.charAt(0).toUpperCase() + option.slice(1)
+      )
+    )
   );
-}
 
-// Function to handle layout change
-function handleLayoutChange(e) {
-  const target = e.target as HTMLSelectElement;
-  cyInstance.layout({ name: target.value }).run();
-}
-
-// Function to handle data type change
-function handleDataTypeChange(e, cell) {
-  const target = e.target as HTMLSelectElement;
-  cell.update({ importDataType: target.value });
-}
-
-export const App = {
+// Main application component
+export const app: MeiosisComponent<State> = {
   initial: {
-    graphData: null,
-    importDataType: 'recipe',
+    cy: null, // Cytoscape instance
+    graphData: undefined, // Graph data to be visualized
+    importDataType: importTypes[0], // Data type to be imported
+    layout: layoutTypes[0], // Layout type to be used
+    style: undefined, // Style to be used
+    showTrays: true, // Controls visibility of trays
+    showCyGraph: true, // Controls visibility of the CyGraph component
+    debug: true, // Controls visibility of debug info
   },
-  services: [
-    // Add services if needed for asynchronous actions, like fetching data
-  ],
-  view: (cell: { state: State }) => {
-    return m('div', [
-      m('h1', 'Graph Visualization'),
-      m('div#menu', [
-        m('div', ['Data Type:', 
-        createSelect('dataTypeSelect', importDataTypes, (e) => handleDataTypeChange(e, cell))]),
-        m('div', ['File: ', 
-        m('input#fileInput', { type: 'file', onchange: (e) => handleFileChange(e, cell) })]),
-      ]),
-      m('div#menu', m('div', [
-        'Sort:', 
-        createSelect('layoutSelect', layoutTypes, handleLayoutChange),
-        m('button', { onclick: () => renderGraph(cell.state.graphData) }, 'Reset view'),
-      ])),
-      m('div#cy', { style: { width: '100%', height: '1000px' } }),
+  view: (cell: MeiosisCell<State>) => {
+    const toggleTrays = () => cell.update({ showTrays: !cell.state.showTrays });
+    const toggleCyGraph = () =>
+      cell.update({ showCyGraph: !cell.state.showCyGraph });
+
+
+    return m("div", [
+      m("h1#title", "Data Factorio"),
+      m(
+        "div#menu",
+        [
+          m(
+            "div#menu",
+            m(
+              "button.menuitem",
+              { onclick: toggleTrays },
+              cell.state.showTrays ? "Hide Options" : "Show Options"
+            ),
+            m(
+              "button.menuitem",
+              { onclick: toggleCyGraph },
+              cell.state.showCyGraph ? "Hide Graph" : "Show Graph"
+            )
+          ),
+        ],
+        cell.state.showTrays &&
+          m("div#menu", [
+            m("div.menuitem", [
+              "Layout:",
+              SelectOptions(layoutTypes, {
+                id: "layoutSelect",
+                onchange: (e) => handleLayoutChange(e, cell),
+              }),
+            ]),
+            FileInput(cell),
+          ])
+      ),
+      cell.state.showCyGraph && CyContainer(cell),
+      m("input[type=checkbox]", {
+        id: "debug",
+        checked: cell.state.debug,
+        onchange: (e) => handleDebugChange(e, cell),
+      }),
+      m("label", { for: "debug" }, "Debug")
     ]);
   },
 };
 
+export const handleLayoutChange = (e, cell) => {
+  const selectedLayout = e.target.value;
+  cell.update({ layout: selectedLayout });
+  renderGraph(cell);
+  
+};
 
-// Handle file input change
-function handleFileChange(event: Event, cell: any) {
-  const fileInput = event.target as HTMLInputElement;
-  if (fileInput.files && fileInput.files.length > 0) {
-    const fileReader = new FileReader();
-    fileReader.onload = (e: ProgressEvent<FileReader>) => {
-      if (e.target === null) return;
-      const elements = JSON.parse(e.target.result as string);
-      let graphData;
-      console.log(cell.state)
-      if (cell.state.importDataType) {
-        graphData = toGraph(elements, cell.state.importDataType);
-      } else {
-        console.error('No data type selected');
-        return;
-      }
-      cell.state.graphData = graphData;
-      renderGraph(graphData);
-    };
-    fileReader.readAsText(fileInput.files[0]);
-  }
-}
+export const handleDataTypeChange = (e, cell) => {
+  const selectedDataType = e.target.value;
+  cell.update({ importDataType: selectedDataType });
+};
+
+export const handleDebugChange = (e, cell) => {
+  const debug = e.target.checked;
+  // hide div with id "tracer" if debug is false
+  document.getElementById("tracer").style.display = debug ? "block" : "none";
+  cell.update({ debug: !cell.getState().debug });
+};
 
 // Initialize Meiosis
-const cells = meiosisSetup<State>({ app: App });
+const cells = meiosisSetup<State>({ app });
 
-m.mount(document.getElementById('app'), {
-  view: () => App.view(cells()),
+m.mount(document.getElementById("app"), {
+  view: () => app.view(cells()),
 });
 
-cells.map(state => {
-  m.redraw(); // Trigger Mithril redraw on state change
+cells.map((cell) => {
+  m.redraw();
 });
 
 // // Debug
-// meiosisTracer({
-//   selector: '#tracer',
-//   rows: 25,
-//   streams: [cells],
-// });
+meiosisTracer({
+  selector: "#tracer",
+  rows: 25,
+  streams: [cells],
+});
 
 window.cells = cells;
-
-
-import cytoscape from 'cytoscape';
-import dagre from 'cytoscape-dagre';
-import cola from 'cytoscape-cola';
-import klay from 'cytoscape-klay';
-import euler from 'cytoscape-euler';
-import coseBilkent from 'cytoscape-cose-bilkent';
-import avsdf from 'cytoscape-avsdf';
-import spread from 'cytoscape-spread';
-
-cytoscape.use(dagre);
-cytoscape.use(cola);
-cytoscape.use(klay);
-cytoscape.use(euler);
-cytoscape.use(coseBilkent);
-cytoscape.use(avsdf);
-cytoscape.use(spread);
-
-
-let cyInstance = null; // Holds the Cytoscape instance globally
-
-// Adapted renderGraph function to be used within Meiosis pattern context
-function renderGraph(graphData) {
-  console.log(graphData)
-  // Check if the Cytoscape instance already exists
-  if (cyInstance) {
-    cyInstance.add(graphData);
-  } else {
-    // No instance, create a new Cytoscape graph
-    cyInstance = cytoscape({
-      container: document.getElementById('cy'),
-      elements: graphData,
-    });
-    styleGraph(cyInstance);
-  }
-}

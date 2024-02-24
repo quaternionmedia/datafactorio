@@ -1,16 +1,23 @@
 // State interface and types
+import { Cytoscape } from 'cytoscape'
 
 export const layoutTypes = [
-  'random', 'grid', 'circle', 'breadthfirst', 'concentric',
+  'grid', 'circle', 'breadthfirst', 'concentric', 'random',
   'cose', 'cola', 'klay', 'dagre', 'euler', 'avsdf', 'cose-bilkent', 'spread'
 ]
+
+export const importTypes = ['inventory', 'recipe', 'entity']
 
 
 
 export interface State {
-    graphData?: Object // Specify more detailed types as needed
-    importDataType?: 'inventory' | 'recipe' | 'entity' | null
+    cy?: Cytoscape
+    graphData?: Object
+    importDataType?: typeof importTypes[number]
     layout?: typeof layoutTypes[number]
-    // layout?: 'random' | 'grid' | 'circle' | 'breadthfirst' | 'concentric' | 'cose' | 'cola' | 'klay' | 'dagre' | 'euler' | 'avsdf' | 'cose-bilkent '| 'spread' | 'null'
+    style?: Object
+    showTrays?: boolean
+    showCyGraph?: boolean
+    debug?: boolean
   }
   
