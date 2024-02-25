@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "Front end for qm-datafactorio",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build --base /datafactorio/",
         "dev": "vite"
     },
     "browserslist": [
