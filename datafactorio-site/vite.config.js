@@ -3,7 +3,6 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-    // base: '/datafactorio/',
     server: {
         port: 1234,
     host: '0.0.0.0',
@@ -11,7 +10,7 @@ export default defineConfig({
     usePolling: true
 },
     },
-    root: 'datafactorio-site/app',
+    root: 'app',
     build: {
     outDir: 'dist'
 }
