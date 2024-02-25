@@ -11,7 +11,7 @@ export default defineConfig({
     usePolling: true
 },
     },
-    root: 'app',
+    root: 'datafactorio-site/app',
     build: {
     outDir: 'dist'
 }
