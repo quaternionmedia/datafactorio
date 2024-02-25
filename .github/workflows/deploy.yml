@@ -23,7 +23,7 @@ jobs:
         run: |
           cd datafactorio-site
           npm ci
-          npm run build --base /datafactorio/
+          npm run build
 
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@v4
