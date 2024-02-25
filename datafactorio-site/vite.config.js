@@ -3,7 +3,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-    base: '/datafactorio-site/',
+    base: '/datafactorio/',
     server: {
         port: 1234,
     host: '0.0.0.0',
