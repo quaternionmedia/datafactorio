@@ -1,2 +1,5 @@
 *.zip
 datafactorio-site/node_modules
+
+/venv
+/.dev
