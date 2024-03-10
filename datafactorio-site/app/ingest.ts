@@ -21,10 +21,34 @@ function handleFileChange(event: Event, cell: any) {
   }
 }
 
+
 export const FileInput = (cell) =>
-  m("input.menuitem", {
+  m("input.menuitem.file", {
     type: "file",
     onchange: (e) => {
       handleFileChange(e, cell);
     },
   });
+
+// TODO: trying to set the 'for' attribute of the button to the id of the input
+// export const FileInput = (cell) =>
+//   m("div#fileinput.menuitem",
+//     m("button#custom_fileinput", {for:"input#real_fileinput"}, "Browse..."),
+//     m("input#real_fileinput", {
+//       type: "file",
+//       onchange: (e) => {
+//         handleFileChange(e, cell);
+//       },
+//     })
+//   );
+
+// corresponding css 
+// .file {
+//   width: 100%;
+// }
+// .file {
+//   background-color: #333639;
+// }
+// input[type="file"] {
+//   display: none;
+// }

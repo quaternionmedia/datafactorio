@@ -1,87 +1,115 @@
-#cy {
-    border: 1px solid #ccc;
-    width: 100vw; /* Viewport width */
-    height: 100vh; /* Viewport height */
-    display: block;
-    position: fixed; /* or 'absolute' if you prefer */
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: hidden;
-    z-index: -1; /* Ensures it stays behind other content */
-}
-
-#menu {
-    position: relative;
-    background-color: #333639;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 0 10px;
-    border: 1px;
-    
-}
-
-.menuitem {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 0 10px;
-    border-radius: 5px;
-    margin: 0 5px;
-}
-
-.menuitem:hover {
-    background-color: #5b6268;
-    color: #ffffff;
-}
-
-#tracer {
-    align-items: center;
-    background-color: #333639;
-    color: #ffffff;
-    padding: 5px;
-    position: relative;
-    /* display: flex; */
-}
-
-#title {
-    font-weight: bold;
-    margin: 0 10px;
-    text-align: center;
-}
-
-textarea {
-    background-color: #333639;
-    color: #889988;
-}
-
-
 body {
     background-color: #565b5e;
     color: #c7c7c7;
     font-family: 'Lucida Console', Monaco, monospace;
+    margin: 0;
 }
-
 
 select {
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #333639;
+    margin-left: 5px;
     color: #ffffff;
 }
 
-button {
-    background-color: #333639;
-    color: #756f1c;
-    border: 1px solid #5b6268;
+button { 
+    color: #978f26;
 }
 
-select:hover, button:hover {
+input.file {
+    padding: 7.8px;
+}
+
+button, select {
+    padding: 10px;
+}
+
+button, select, input.file  {
+    background-color: #333639;
+    border: 1px solid #5b6268;
+    border-radius: 5px;
+}
+
+select:hover, button:hover, input.file:hover {
     background-color: #5b6268;
     color: #ffffff;
+}
+
+/*#############  HEADER & MENU  #############*/
+#header {
+    background-color: #333639;
+}
+
+#title { 
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+}
+
+#menu {
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+    height: 100%;
+}
+
+.menuitem {
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px;
+}
+
+/*#############  TOGGLES  #############*/
+.toggle {
+    width: 120px;
+}
+
+/*#############  TRAY  #############*/
+/* .tray {
+    width: 100%;
+} */
+.layout {
+    width: 200px;;
+}
+.file {
+    width: 500px;
+}
+
+/*#############  CYTOSCAPE  #############*/
+#cy {
+    border: 1px solid #ccc;
+    width: 100vw; /* Viewport width */
+    height: 100vw; /* Viewport height */
+    display: block;
+    position: fixed; /* or 'absolute' if you prefer */      
+    overflow: hidden;
+    z-index: -1; /* Ensures it stays behind other content */
+}
+
+
+/*#############  TRACER  #############*/
+#tracer {
+    position: absolute; 
+    left: 0;
+    align-items: center;
+    border-top: 1px solid #5b6268;
+    background-color: #333639bd;
+    color: #ffffff;
+    padding: 5px;
+    width: 50%;
+}
+#tracerModel_0 {
+    width: 99%;
+    margin: 10px 0px;
+}
+#tracerSettingsContainer {
+    margin-bottom: 5px;
+}
+input#tracerSlider_0 {
+    margin-bottom: 10px;
+}
+textarea {
+    background-color: #333639;
+    color: #889988;
 }

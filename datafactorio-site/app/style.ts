@@ -14,33 +14,36 @@ export const colorpalette = {
     'default': '#64494f',
 };
 
-export const style = [{
-    selector: 'node',
-    style: {
-        'color': '#222',
-        'label': 'data(id)',
-        'text-valign': 'center',
-        'font-size': '10px',
-        'min-zoomed-font-size': '8px',
-        'opacity': '0.7', 
-        'shape': 'data(shape)' || 'ellipse',
-        'background-color': 'data(color)' || '#7f7',
-    },
-    ':selected': {
-        'background-color': 'black',
-        'line-color': 'black',
-        'opacity': '1',
-    },
-}, {
-    selector: 'edge',
-    style: {
-        'line-color': 'data(color)' || '#777',
-        'opacity': '0.5',
-        'width': 'data(weight)' || '1',
-    },
-    ':selected': {
-        'background-color': 'black',
-        'line-color': 'black',
-        'opacity': '1',
-    },
-}]
+export const style = [
+    {
+        selector: 'node',
+        style: {
+            'color': '#222',
+            'label': 'data(id)',
+            'text-valign': 'center',
+            'font-size': '10px',
+            'min-zoomed-font-size': '8px',
+            'opacity': '0.7', 
+            'shape': 'data(shape)' || 'ellipse',
+            'background-color': 'data(color)' || '#7f7',
+        },
+        ':selected': {
+            'background-color': 'black',
+            'line-color': 'black',
+            'opacity': '1',
+        },
+    }, 
+    {
+        selector: 'edge',
+        style: {
+            'line-color': 'data(color)' || '#777',
+            'opacity': '0.5',
+            'width': 'data(weight)' || '1',
+        },
+        ':selected': {
+            'background-color': 'black',
+            'line-color': 'black',
+            'opacity': '1',
+        },
+    }
+]

@@ -18,6 +18,8 @@ export interface State {
     style?: Object
     showTrays?: boolean
     showCyGraph?: boolean
-    debug?: boolean
+    showDebug?: boolean
+    saveGraph?: boolean
+    loadGraph?: boolean
   }
   

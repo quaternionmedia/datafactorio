@@ -29,56 +29,67 @@ export const app: MeiosisComponent<State> = {
     importDataType: importTypes[0], // Data type to be imported
     layout: layoutTypes[0], // Layout type to be used
     style: undefined, // Style to be used
+    showDebug: true, // Controls visibility of debug 
     showTrays: true, // Controls visibility of trays
     showCyGraph: true, // Controls visibility of the CyGraph component
-    debug: true, // Controls visibility of debug info
+    //debug: true, // Controls visibility of debug info
   },
   view: (cell: MeiosisCell<State>) => {
-    const toggleTrays = () => cell.update({ showTrays: !cell.state.showTrays });
-    const toggleCyGraph = () =>
-      cell.update({ showCyGraph: !cell.state.showCyGraph });
-
-
-    return m("div", [
-      m("h1#title", "Data Factorio"),
-      m(
-        "div#menu",
-        [
-          m(
-            "div#menu",
-            m(
-              "button.menuitem",
-              { onclick: toggleTrays },
-              cell.state.showTrays ? "Hide Options" : "Show Options"
-            ),
-            m(
-              "button.menuitem",
-              { onclick: toggleCyGraph },
-              cell.state.showCyGraph ? "Hide Graph" : "Show Graph"
-            )
-          ),
-        ],
-        cell.state.showTrays &&
-          m("div#menu", [
-            m("div.menuitem", [
-              "Layout:",
-              SelectOptions(layoutTypes, {
-                id: "layoutSelect",
-                onchange: (e) => handleLayoutChange(e, cell),
-              }),
-            ]),
-            FileInput(cell),
-          ])
+    return m("div#header",
+      m("h1#title", 
+        "Data Factorio"
+      ),
+      m("div#menu", 
+        Buttons(cell), 
+        cell.state.showTrays && Trays(cell),
       ),
       cell.state.showCyGraph && CyContainer(cell),
-      m("input[type=checkbox]", {
-        id: "debug",
-        checked: cell.state.debug,
-        onchange: (e) => handleDebugChange(e, cell),
-      }),
-      m("label", { for: "debug" }, "Debug")
-    ]);
+    );
   },
+};
+
+
+export const Buttons = (cell) => {
+  const toggleTrays = () => cell.update({ showTrays: !cell.state.showTrays });
+  const toggleCyGraph = () => cell.update({ showCyGraph: !cell.state.showCyGraph });
+  const toggleDebug = () => handleDebugChange(cell);
+  return m("div#menu.buttons",
+    m("button.menuitem.toggle",
+      { onclick: toggleDebug },
+      cell.state.showDebug ? "Hide Debug" : "Show Debug"
+    ),
+    m("button.menuitem.toggle",
+      { onclick: toggleTrays },
+      cell.state.showTrays ? "Hide Options" : "Show Options"
+    ),
+    m("button.menuitem.toggle",
+      { onclick: toggleCyGraph },
+      cell.state.showCyGraph ? "Hide Graph" : "Show Graph"
+    ),
+    // m(
+    //   "button.menuitem.toggle",
+    //   { onclick: toggleCyGraph },
+    //   cell.state.saveGraph ? "Save to GraphBase"
+    // ),
+    // m(
+    //   "button.menuitem.toggle",
+    //   { onclick: toggleCyGraph },
+    //   cell.state.loadGraph ? "Load from GraphBase"
+    // )
+  );
+};
+
+export const Trays = (cell) => {
+  return m("div#menu.tray",
+    m("div.menuitem.layout", 
+      "Layout:",
+      SelectOptions(layoutTypes, {
+        id: "layoutSelect",
+        onchange: (e) => handleLayoutChange(e, cell),
+      }),
+    ),
+    FileInput(cell),
+  )
 };
 
 export const handleLayoutChange = (e, cell) => {
@@ -93,29 +104,33 @@ export const handleDataTypeChange = (e, cell) => {
   cell.update({ importDataType: selectedDataType });
 };
 
-export const handleDebugChange = (e, cell) => {
-  const debug = e.target.checked;
-  // hide div with id "tracer" if debug is false
-  document.getElementById("tracer").style.display = debug ? "block" : "none";
-  cell.update({ debug: !cell.getState().debug });
+export const handleDebugChange = (cell) => {
+  // Toggle debug state
+  cell.update({ showDebug: !cell.getState().showDebug });
+  // Hide div with id "tracer" if debug is false
+  document.getElementById("tracer").style.display = cell.getState().showDebug ? "block" : "none";
 };
+
 
 // Initialize Meiosis
 const cells = meiosisSetup<State>({ app });
+cells.map((cell) => {
+  m.redraw();
+});
 
 m.mount(document.getElementById("app"), {
   view: () => app.view(cells()),
 });
 
-cells.map((cell) => {
-  m.redraw();
-});
 
-// // Debug
+
+
+// Debug
 meiosisTracer({
   selector: "#tracer",
-  rows: 25,
+  rows: 20,
+  cols: 50,
   streams: [cells],
 });
-
+// Make the cells available in the console for debugging
 window.cells = cells;
