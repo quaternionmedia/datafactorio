@@ -15,7 +15,9 @@ export interface State {
     graphData?: Object
     importDataType?: typeof importTypes[number]
     layout?: typeof layoutTypes[number]
+    inputFile?: string
     style?: Object
+    showMenu?: boolean
     showTrays?: boolean
     showCyGraph?: boolean
     showDebug?: boolean
