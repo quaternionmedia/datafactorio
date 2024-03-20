@@ -1,0 +1,3 @@
+[submodule "datafactorio-site/dev/graphbase"]
+	path = datafactorio-site/dev/graphbase
+	url = https://github.com/quaternionmedia/graphbase
