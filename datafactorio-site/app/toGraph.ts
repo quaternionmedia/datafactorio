@@ -1,10 +1,30 @@
 import { shapepalette, colorpalette } from "./style";
 
 export function toGraph(input) {
-  let graph = { nodes: [], edges: [] };
+  // specify the graph data in the form of a JSON object
+  interface NodeData {
+    id: string; // Or number, depending on ID strategy
+    [key: string]: any; // For any other additional attributes
+  }
+
+  interface EdgeData {
+    source: string; // Or number
+    target: string; // Or number
+    [key: string]: any; // For any other additional attributes
+  }
+
+  interface Graph {
+    nodes: Array<{ data: NodeData }>;
+    edges: Array<{ data: EdgeData }>;
+  }
+  let graph: Graph = { nodes: [], edges: [] };
 
   const addNodeIfNotExist = (id, attrs = {}) => {
-    if (Object.keys(attrs).length !== 0) {
+    // Check if a node with the given ID already exists
+    const nodeExists = graph.nodes.some(node => node.data.id === id);
+  
+    // If the node doesn't exist and attrs is not empty, add the node
+    if (!nodeExists && Object.keys(attrs).length !== 0) {
       graph.nodes.push({ data: { id, ...attrs } });
       console.log(attrs);
     }
@@ -25,7 +45,7 @@ export function toGraph(input) {
     addNodeIfNotExist(type, {
       color: colorpalette[type],
       shape: shapepalette[type],
-    });
+    });    
     Object.keys(inputData).forEach((key) => {
       const color = colorpalette[type];
       const shape = shapepalette[type];

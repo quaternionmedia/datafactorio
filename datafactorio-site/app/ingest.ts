@@ -28,7 +28,7 @@ function handleFileChange(event: Event, cell: any) {
 // Browse button and filename display
 export const FileInput = (cell) => {
   // Trigger file input click event
-  const triggerFileInput = () => document.getElementById("fileInput").click(); 
+  const triggerFileInput = () => document.getElementById("fileInput")?.click(); 
   return m("div.menuitem", [
     // Actual file input element
     m("input#fileInput.file", { 

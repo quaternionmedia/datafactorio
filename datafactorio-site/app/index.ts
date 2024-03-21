@@ -8,9 +8,7 @@ import { State, layoutTypes, importTypes } from "./state";
 import { CyContainer, renderGraph } from "./cyto";
 import { FileInput } from "./ingest";
 
-
 // --- Event Handlers ---
-
 // This var ensures a single attachment of the event listener
 let isKeyListenerAttached = false;
 
@@ -135,7 +133,7 @@ export const MenuTray = (cell) => {
 // --- Main Application Component ---
 export const app: MeiosisComponent<State> = {
   initial: {
-    cy: null,
+    cy: undefined,
     graphData: undefined,
     importDataType: importTypes[0],
     layout: layoutTypes[0],
@@ -146,21 +144,25 @@ export const app: MeiosisComponent<State> = {
     showCyGraph: true,
   },
   view: (cell: MeiosisCell<State>) => {
+    // Attach the keypress event listener once when the component is created/mounted
+    if (!isKeyListenerAttached) {
+      ToggleGuiKeypressEvent(cell);
+    }
     return m("div#app",
       cell.getState().showMenu && Menu(cell),
-      ToggleGuiKeypressEvent(cell),
       ToggleMenuButton(cell),
       cell.getState().showCyGraph && CyContainer(cell),
     );
   },
 };
 
-
 // --- Initialization ---
 const cells = meiosisSetup<State>({ app });
 cells.map((cell) => { m.redraw(); });
-m.mount(document.getElementById("app"), { view: () => app.view && app.view(cells()) });
-
+const appElement = document.getElementById("app");
+if (appElement) {
+  m.mount(appElement, { view: () => app.view && app.view(cells()) });
+}
 
 // --- Debug Setup ---
 declare global { interface Window { cells: any; } }

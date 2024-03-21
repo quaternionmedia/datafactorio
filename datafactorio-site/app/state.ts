@@ -1,5 +1,7 @@
 // State interface and types
-import { Cytoscape } from 'cytoscape'
+import { Core } from 'cytoscape'
+// NOTE: 'Cytoscape' is the library, 'Core' is the needed type
+// import { Cytoscape } from 'cytoscape'
 
 export const layoutTypes = [
   'grid', 'circle', 'breadthfirst', 'concentric', 'random',
@@ -8,10 +10,8 @@ export const layoutTypes = [
 
 export const importTypes = ['inventory', 'recipe', 'entity']
 
-
-
 export interface State {
-    cy?: Cytoscape
+    cy?: Core
     graphData?: Object
     importDataType?: typeof importTypes[number]
     layout?: typeof layoutTypes[number]
@@ -23,5 +23,4 @@ export interface State {
     showDebug?: boolean
     saveGraph?: boolean
     loadGraph?: boolean
-  }
-  
+}
