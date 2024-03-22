@@ -1,144 +1,176 @@
 body {
-    background-color: #565b5e;
-    color: #c7c7c7;
-    font-family: 'Lucida Console', Monaco, monospace;
-    margin: 0;
+  background-color: #565b5e;
+  color: #c7c7c7;
+  font-family: 'Lucida Console', Monaco, monospace;
+  margin: 0;
 }
 select { 
-    color: #c7c7c7;
+  color: #c7c7c7;
 }
 button {  
-    color: #c7c7c7;
+  color: #c7c7c7;
 }
 input.file {
-    padding: 7.5px; /* input obj has slightly bigger height natively */
+  padding: 7.5px; /* input obj has slightly bigger height natively */
 }
 button, select {
-    padding: 10px;
+  padding: 10px;
 }
 button, select, input.file  {
-    background-color: #333639;
-    border: 1px solid #5b6268;
-    border-radius: 5px;
+  background-color: #333639;
+  border: 1px solid #5b6268;
+  border-radius: 5px;
 }
 select:hover, button:hover, input.file:hover {
-    background-color: #5b6268;
-    color: #ffffff;
-    cursor: pointer;
+  background-color: #5b6268;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 /*#############  HEADER & MENU  #############*/
 #app {
-    background-color: #333639;
+  background-color: #333639;
 }
 #title { 
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
-    padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
 }
-#subtitle {
-    font-weight: normal;
-    font-size: 0.8em;
-    color: #889988;
-    padding-left: 10px;
-    height: 20px;
+#currentGraph {
+  display:inline;
+  font-weight: normal;
+  font-size: 0.8em;
+  color: #889988;
+  padding-left: 10px;
+  height: 20px;
 }
-#menu {
-    /* position: relative; */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+#message {
+  display:inline;
+  position: absolute;
+  right: 0;
+  font-weight: normal;
+  font-size: 0.8em;
+  padding-right: 10px;
+  height: 20px;
 }
-.menuitem {
-    flex-direction: row;
-    justify-content: center;
-    margin: 10px;
+#message.info {
+  color: #889988;
 }
-.menuToggle {
-    position: absolute;
-    left: 0;
-    border:none;
-    border-top: 1px solid #5b6268;
-    border-radius: 0px;
-    background-color: #333639bd;
-    color: #889988;
-    padding: 5px; 
+#message.error {
+  color: #df6767;
+}
+#message.warning {
+  color: #e8cc5f;
+}
+#message.success {
+  color: #63c563;
 }
 
-/*#############  MENU BUTTONS  #############*/
-button.toggle {
-    width: 120px;
+#menu {
+  /* position: relative; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.menuitem {
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px;
+}
+.menuToggle {
+  position: absolute;
+  left: 0;
+  border:none;
+  border-top: 1px solid #5b6268;
+  border-radius: 0px;
+  background-color: #333639bd;
+  color: #889988;
+  padding: 5px; 
 }
 
 /*#############  MENU TRAY  #############*/
 /* .tray {
-    width: 100%;
+  width: 100%;
 } */
-#layoutSelect {
-    width: 200px;;
+#layouts > select {
+  width: 120px;
+  margin-left: 10px;
 }
-#layoutSelect > option {
-    background-color: #333639;
-    border: none;
-    border-radius: 0px;
-    color: #c7c7c7;
+#layouts > option {
+  background-color: #333639;
+  border: none;
+  border-radius: 0px;
+  color: #c7c7c7;
 }
+#graphs > select {
+  width: 120px;
+  margin-left: 10px;
+}
+#graphs > option {
+  background-color: #333639;
+  border: none;
+  border-radius: 0px;
+  color: #c7c7c7;
+}
+/* TODO: make the first option in graphs slightly darker font color */
 
 /*#############  CYTOSCAPE  #############*/
 #cy {
-    border-top: 1px solid #a3a7ab;
-    width: 100%; /* Viewport width */
-    height: 100%; /* Viewport height */
-    display: block;
-    position: fixed; /* or 'absolute' if you prefer */      
-    overflow: hidden;
-    z-index: -1; /* Ensures it stays behind other content */
+  border-top: 1px solid #a3a7ab;
+  width: 100%; /* Viewport width */
+  height: 100%; /* Viewport height */
+  display: block;
+  position: fixed; /* or 'absolute' if you prefer */      
+  overflow: hidden;
+  z-index: -1; /* Ensures it stays behind other content */
 }
 
 /*#############  TRACER & DEBUG  #############*/
 .devButtons {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 .devButtons > button {
-    color: #bbb15c;
-    border-color: #bbb15c;
-    background-color: #31312b;
+  width: 120px;
+  margin: 10px;
+  color: #bbb15c;
+  border-color: #bbb15c;
+  background-color: #31312b;
 }
 .devButtons > button:hover {
-    color: #e7df9f;
-    border-color: #e7df9f;
-    background-color: #47463b;
-    cursor: pointer;
+  color: #e7df9f;
+  border-color: #e7df9f;
+  background-color: #47463b;
+  cursor: pointer;
 }
 #tracer {
-    position: absolute; 
-    right: 0;
-    align-items: center;
-    border-top: 1px solid #5b6268;
-    background-color: #333639bd;
-    color: #ffffff;
-    padding: 5px;
-    width: 50%;
+  position: absolute; 
+  right: 0;
+  align-items: center;
+  border-top: 1px solid #5b6268;
+  background-color: #333639bd;
+  color: #ffffff;
+  padding: 5px;
+  width: 50%;
 }
 #tracerModel_0 {
-    width: 99%;
-    margin: 10px 0px;
+  width: 99%;
+  margin: 10px 0px;
 }
 #tracerSettingsContainer {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 input#tracerSlider_0 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 textarea {
-    background-color: #333639;
-    color: #889988;
+  background-color: #333639;
+  color: #889988;
 }

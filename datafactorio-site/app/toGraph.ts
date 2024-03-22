@@ -26,7 +26,7 @@ export function toGraph(input) {
     // If the node doesn't exist and attrs is not empty, add the node
     if (!nodeExists && Object.keys(attrs).length !== 0) {
       graph.nodes.push({ data: { id, ...attrs } });
-      console.log(attrs);
+      //console.log(attrs);
     }
   };
 
@@ -99,4 +99,4 @@ export function toGraph(input) {
   });
 
   return graph;
-}
+};

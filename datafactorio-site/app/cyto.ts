@@ -9,6 +9,8 @@ import coseBilkent from "cytoscape-cose-bilkent";
 import avsdf from "cytoscape-avsdf";
 import spread from "cytoscape-spread";
 
+import { defaultGraphOptions } from "./state";
+
 cytoscape.use(dagre);
 cytoscape.use(cola);
 cytoscape.use(klay);
@@ -21,7 +23,19 @@ export const renderGraph = (cell) => {
   if (document.getElementById("cy") && cell.getState().graphData) {
     cell.update({ cy: CyContainer(cell) });
   }
-}
+};
+
+export const clearGraph = (cell) => {
+  cell.update({
+    graphData: null,
+    cy: cytoscape({
+      container: document.getElementById("cy"),
+      elements: [],
+      layout: { name: cell.getState().layout },
+      style: cell.getState().style,
+    })
+  });
+};
 
 export const CyContainer = (cell) =>
   m("div#cy", {
@@ -33,4 +47,5 @@ export const CyContainer = (cell) =>
         style: cell.getState().style,
       });
     },
-  });
+  }
+);
