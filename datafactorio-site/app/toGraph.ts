@@ -1,4 +1,4 @@
-import { shapepalette, colorpalette } from "./style";
+import { shapepalette, colorpalette } from './style';
 
 export function toGraph(input) {
   // specify the graph data in the form of a JSON object
@@ -21,8 +21,8 @@ export function toGraph(input) {
 
   const addNodeIfNotExist = (id, attrs = {}) => {
     // Check if a node with the given ID already exists
-    const nodeExists = graph.nodes.some(node => node.data.id === id);
-  
+    const nodeExists = graph.nodes.some((node) => node.data.id === id);
+
     // If the node doesn't exist and attrs is not empty, add the node
     if (!nodeExists && Object.keys(attrs).length !== 0) {
       graph.nodes.push({ data: { id, ...attrs } });
@@ -45,32 +45,32 @@ export function toGraph(input) {
     addNodeIfNotExist(type, {
       color: colorpalette[type],
       shape: shapepalette[type],
-    });    
+    });
     Object.keys(inputData).forEach((key) => {
       const color = colorpalette[type];
       const shape = shapepalette[type];
       addNodeIfNotExist(key, { color, shape });
       switch (type) {
-        case "inventory":
+        case 'inventory':
           let { width, height, weight } = inputData[key];
 
           addNodeIfNotExist(key, { width, height, color, shape });
           addEdge(type, key, { color, weight: weight / 100 });
           break;
 
-        case "recipes":
+        case 'recipes':
           let product = inputData[key];
           addNodeIfNotExist(key, { color, shape });
-          let ingredients = product["ingredients"];
+          let ingredients = product['ingredients'];
           addEdge(type, key, {
             color,
             weight: Math.sqrt(ingredients.length / 2),
           });
           break;
 
-        case "entities":
+        case 'entities':
           let entity = inputData[key];
-          let position = entity["position"];
+          let position = entity['position'];
           addNodeIfNotExist(key, {
             color,
             shape,
@@ -80,14 +80,14 @@ export function toGraph(input) {
           addEdge(type, key, { color, weight: 0.2 });
           break;
 
-        case "technologies":
+        case 'technologies':
           let tech = inputData[key];
           addNodeIfNotExist(key, { color, shape });
           addEdge(type, key, { color, weight: 0.2 });
           break;
 
         default:
-          console.error("Unsupported data type", type);
+          console.error('Unsupported data type', type);
           return;
       }
     });
@@ -99,4 +99,4 @@ export function toGraph(input) {
   });
 
   return graph;
-};
+}

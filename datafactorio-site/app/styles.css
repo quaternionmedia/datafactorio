@@ -4,41 +4,41 @@ body {
   font-family: 'Lucida Console', Monaco, monospace;
   margin: 0;
 }
-select { 
+button,
+select {
   color: #c7c7c7;
-}
-button {  
-  color: #c7c7c7;
-}
-input.file {
-  padding: 7.5px; /* input obj has slightly bigger height natively */
-}
-button, select {
-  padding: 10px;
-}
-button, select, input.file  {
   background-color: #333639;
   border: 1px solid #5b6268;
   border-radius: 5px;
+  padding: 10px;
 }
-select:hover, button:hover, input.file:hover {
+select:hover,
+button:hover {
   background-color: #5b6268;
-  color: #ffffff;
+  color: #e5e5e5;
   cursor: pointer;
+}
+option {
+  background-color: #5b6268;
+  color: #e5e5e5;
+}
+option:checked {
+  background-color: #333639;
+  color: #c7c7c7;
 }
 
 /*#############  HEADER & MENU  #############*/
 #app {
   background-color: #333639;
 }
-#title { 
+#title {
   font-weight: bold;
   text-align: center;
   margin: 0;
   padding: 10px;
 }
 #currentGraph {
-  display:inline;
+  display: inline;
   font-weight: normal;
   font-size: 0.8em;
   color: #889988;
@@ -46,7 +46,7 @@ select:hover, button:hover, input.file:hover {
   height: 20px;
 }
 #message {
-  display:inline;
+  display: inline;
   position: absolute;
   right: 0;
   font-weight: normal;
@@ -82,12 +82,12 @@ select:hover, button:hover, input.file:hover {
 .menuToggle {
   position: absolute;
   left: 0;
-  border:none;
+  border: none;
   border-top: 1px solid #5b6268;
   border-radius: 0px;
   background-color: #333639bd;
   color: #889988;
-  padding: 5px; 
+  padding: 5px;
 }
 
 /*#############  MENU TRAY  #############*/
@@ -98,23 +98,15 @@ select:hover, button:hover, input.file:hover {
   width: 120px;
   margin-left: 10px;
 }
-#layouts > option {
-  background-color: #333639;
-  border: none;
-  border-radius: 0px;
-  color: #c7c7c7;
-}
 #graphs > select {
-  width: 120px;
+  width: 200px;
   margin-left: 10px;
 }
-#graphs > option {
-  background-color: #333639;
-  border: none;
-  border-radius: 0px;
-  color: #c7c7c7;
+.deleteGraph {
+  color: #c9bebe;
+  background-color: #3d3335;
+  border: 1px solid #6d555b;
 }
-/* TODO: make the first option in graphs slightly darker font color */
 
 /*#############  CYTOSCAPE  #############*/
 #cy {
@@ -122,7 +114,7 @@ select:hover, button:hover, input.file:hover {
   width: 100%; /* Viewport width */
   height: 100%; /* Viewport height */
   display: block;
-  position: fixed; /* or 'absolute' if you prefer */      
+  position: fixed; /* or 'absolute' if you prefer */
   overflow: hidden;
   z-index: -1; /* Ensures it stays behind other content */
 }
@@ -142,16 +134,16 @@ select:hover, button:hover, input.file:hover {
   margin: 10px;
   color: #bbb15c;
   border-color: #bbb15c;
-  background-color: #31312b;
+  background-color: #3c3931;
 }
 .devButtons > button:hover {
-  color: #e7df9f;
-  border-color: #e7df9f;
+  color: #e1ddbb;
+  border-color: #e6dd99;
   background-color: #47463b;
   cursor: pointer;
 }
 #tracer {
-  position: absolute; 
+  position: absolute;
   right: 0;
   align-items: center;
   border-top: 1px solid #5b6268;

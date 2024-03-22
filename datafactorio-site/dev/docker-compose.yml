@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME = root
+      - MONGO_INITDB_ROOT_PASSWORD = example
+    networks:
+      - db_net
+  api:
+    container_name: datafactorio-api
+    image: datafactorio-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '8000:8000'
+    depends_on:
+      - mongodb
+    networks:
+      - db_net
+
+volumes:
+  mongodb_data:
+
+networks:
+  db_net:
+    driver: bridge
