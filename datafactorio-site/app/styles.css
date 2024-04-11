@@ -35,24 +35,35 @@ option:checked {
   font-weight: bold;
   text-align: center;
   margin: 0;
+  height: 10px;
   padding: 10px;
 }
+#messageBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 20px;
+}
 #currentGraph {
-  display: inline;
+  position: relative;
+  top: 20px;
+  flex-direction: row;
+  font-size: 1em;
   font-weight: normal;
-  font-size: 0.8em;
   color: #889988;
   padding-left: 10px;
   height: 20px;
+  width: 100%;
 }
 #message {
-  display: inline;
-  position: absolute;
-  right: 0;
+  position: relative;
+  flex-direction: row;
+  text-align:center;
+  font-size: 1em;
   font-weight: normal;
-  font-size: 0.8em;
-  padding-right: 10px;
   height: 20px;
+  width: 100%;
 }
 #message.info {
   color: #889988;
@@ -88,6 +99,20 @@ option:checked {
   background-color: #333639bd;
   color: #889988;
   padding: 5px;
+  width: 25px;
+  height: 25px;
+}
+.menuToggle:hover {
+  background-color: #5b6268;
+  color: #e5e5e5;
+  cursor: pointer;
+}
+.menuToggle > img {
+  width: 15px;
+  height: 15px;
+}
+.menuToggle img.tinted {
+  filter: hue-rotate(80deg);
 }
 
 /*#############  MENU TRAY  #############*/
@@ -106,6 +131,48 @@ option:checked {
   color: #c9bebe;
   background-color: #3d3335;
   border: 1px solid #6d555b;
+}
+.deleteGraph:hover {
+  color: #e1d0d0;
+  background-color: #6d555b;
+  border: 1px solid #6d555b;
+}
+#deleteGraph.disabled,
+.saveGraph.disabled {
+  color: #c9bebe;
+  background-color: #326ea6;
+  border: 1px solid #6d555b;
+}
+
+#popup {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+}
+#popupGrid {
+  display: grid;
+  align-items: center;
+  grid: 1fr 1fr / 1fr 1fr;
+  background-color: #333639;
+  border-top: 1px solid #5b6268;
+  border-radius: 0px 0px 5px 5px;
+  padding: 10px; 
+}
+#popupGrid > p {
+	grid-row:1;
+	grid-column:1 / span 2;
+  margin: 10px; 
+}
+#popupGrid > button {
+	grid-row:2;
+	grid-column:2;
+}
+#popupGrid > button#deleteGraphConfirm {
+	grid-row:2;
+	grid-column:1;
 }
 
 /*#############  CYTOSCAPE  #############*/
@@ -132,14 +199,14 @@ option:checked {
 .devButtons > button {
   width: 120px;
   margin: 10px;
-  color: #bbb15c;
-  border-color: #bbb15c;
+  color: #a69f5d;
+  border-color: #a69f5d;
   background-color: #3c3931;
 }
 .devButtons > button:hover {
-  color: #e1ddbb;
-  border-color: #e6dd99;
-  background-color: #47463b;
+  color: #3c3931;
+  border-color: #a69f5d;
+  background-color: #a69f5d;
   cursor: pointer;
 }
 #tracer {
@@ -148,7 +215,7 @@ option:checked {
   align-items: center;
   border-top: 1px solid #5b6268;
   background-color: #333639bd;
-  color: #ffffff;
+  color: #c7c7c7;
   padding: 5px;
   width: 50%;
 }
